@@ -306,11 +306,11 @@
 
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
 
+// Sample testimonials (skills grouped)
 const testimonials = [
   {
     quote: "The standard markup language used to structure content on the web.",
@@ -319,102 +319,149 @@ const testimonials = [
     src: "/HTML.png",
   },
   {
-    quote: "A stylesheet language used for layout and appearance of web elements.",
+    quote: "A stylesheet language to design web page layout and appearance.",
     name: "CSS",
     designation: "Stylesheet",
     src: "/CSS.png",
   },
   {
-    quote: "Low-level programming languages for system software and performance.",
+    quote: "Used for high-performance applications like OS or games.",
     name: "C/C++",
     designation: "Systems Language",
     src: "/C.png",
   },
   {
-    quote: "High-level language known for readability and automation.",
+    quote: "Popular scripting language for data, automation and AI.",
     name: "Python",
     designation: "Scripting Language",
     src: "/Python.png",
   },
   {
-    quote: "Utility-first CSS framework for building UI.",
+    quote: "Utility-first CSS framework for modern UI.",
     name: "Tailwind CSS",
-    designation: "Framework",
+    designation: "CSS Framework",
     src: "/TailwindCSS.png",
   },
   {
-    quote: "Versatile scripting language for the web.",
+    quote: "Core language for interactive web features.",
     name: "JavaScript",
-    designation: "Programming Language",
+    designation: "Web Language",
     src: "/JavaScript.png",
   },
 ];
 
 const testimonials2 = [
   {
-    quote: "JS library for building UI components.",
     name: "React Js",
-    designation: "Frontend Library",
+    quote: "JavaScript library for building UIs.",
+    designation: "Frontend Framework",
     src: "/Reactjs.png",
   },
   {
-    quote: "Full-stack React framework with SSR and API support.",
     name: "Next Js",
-    designation: "Web Framework",
+    quote: "Full-stack React framework with routing, SSR, and APIs.",
+    designation: "App Framework",
     src: "/Nextjs.png",
   },
 ];
 
 const testimonials3 = [
-  { name: "PostgreSQL", quote: "Robust open-source relational database.", src: "/Postgresql.png", designation: "Database" },
-  { name: "MySQL", quote: "Popular open-source relational DBMS.", src: "/Mysql.png", designation: "Database" },
-  { name: "VS Code", quote: "Lightweight source-code editor by Microsoft.", src: "/Vscode.png", designation: "Editor" },
-  { name: "Dev C++", quote: "IDE for C/C++ programs.", src: "/Devcpp.png", designation: "IDE" },
-  { name: "Jupyter Notebook", quote: "Interactive notebook for data/code.", src: "/Jupyter.png", designation: "Notebook" },
-  { name: "Netlify", quote: "Static hosting with CI/CD.", src: "/Netlify.png", designation: "Deploy Platform" },
-  { name: "Vercel", quote: "Optimized for React/Next.js hosting.", src: "/Vercel.png", designation: "Hosting" },
-  { name: "Canva", quote: "Create presentations and social media graphics.", src: "/Canva.png", designation: "Design Tool" },
-  { name: "Github", quote: "Code hosting and collaboration platform.", src: "/Github.png", designation: "Version Control" },
+  {
+    name: "PostgreSQL",
+    quote: "Robust open-source relational database.",
+    designation: "Database",
+    src: "/Postgresql.png",
+  },
+  {
+    name: "MySQL",
+    quote: "Popular open-source relational database.",
+    designation: "Database",
+    src: "/Mysql.png",
+  },
+  {
+    name: "VS Code",
+    quote: "Lightweight source-code editor.",
+    designation: "Editor",
+    src: "/Vscode.png",
+  },
+  {
+    name: "Dev C++",
+    quote: "IDE for C/C++ development.",
+    designation: "IDE",
+    src: "/Devcpp.png",
+  },
+  {
+    name: "Jupyter Notebook",
+    quote: "Literate coding for data science.",
+    designation: "Code Notebook",
+    src: "/Jupyter.png",
+  },
+  {
+    name: "Netlify",
+    quote: "Fast static site deployment platform.",
+    designation: "Hosting",
+    src: "/Netlify.png",
+  },
+  {
+    name: "Vercel",
+    quote: "Deploy Next.js sites with serverless backend.",
+    designation: "Hosting",
+    src: "/Vercel.png",
+  },
+  {
+    name: "Canva",
+    quote: "Create polished graphics easily.",
+    designation: "Design Tool",
+    src: "/Canva.png",
+  },
+  {
+    name: "Github",
+    quote: "Host and collaborate on code with Git.",
+    designation: "Version Control",
+    src: "/Github.png",
+  },
 ];
 
-const skillGroups = [
+// Grouped skill sections
+const groups = [
   { title: "Languages & UI", items: testimonials },
   { title: "Frameworks", items: testimonials2 },
   { title: "Tools & Platforms", items: testimonials3 },
 ];
 
 export default function SkillsPage() {
-  const [activeIndex, setActiveIndex] = useState(0);
   const [activeGroup, setActiveGroup] = useState(0);
+  const [active, setActive] = useState(0);
 
-  const skills = skillGroups[activeGroup].items;
+  const skills = groups[activeGroup].items;
 
   const prev = () => {
-    setActiveIndex((prev) => (prev === 0 ? skills.length - 1 : prev - 1));
+    setActive((prev) => (prev === 0 ? skills.length - 1 : prev - 1));
   };
 
   const next = () => {
-    setActiveIndex((prev) => (prev === skills.length - 1 ? 0 : prev + 1));
+    setActive((prev) => (prev === skills.length - 1 ? 0 : prev + 1));
   };
 
   return (
     <div className="relative min-h-screen overflow-hidden text-center px-4 py-16 md:px-12">
-      <Hyperspeed />
-      <h1 className="text-3xl font-bold mb-2 text-neutral-800 dark:text-white">
+      <h1 className="text-3xl font-bold mb-6 text-neutral-800 dark:text-white">
         Skills
       </h1>
-      <div className="flex justify-center mb-6 gap-4">
-        {skillGroups.map((group, i) => (
+
+      {/* Group Selector Buttons */}
+      <div className="flex justify-center mb-6 gap-4 flex-wrap">
+        {groups.map((group, index) => (
           <button
             key={group.title}
             onClick={() => {
-              setActiveGroup(i);
-              setActiveIndex(0);
+              setActiveGroup(index);
+              setActive(0);
             }}
             className={`px-4 py-2 rounded-full font-medium ${
-              i === activeGroup
+              index === activeGroup
                 ? "bg-blue-600 text-white"
-                : "bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-white"
+                : "bg-gray-200 dark:bg-neutral-700 text-black dark:text-white"
             }`}
           >
             {group.title}
@@ -422,10 +469,11 @@ export default function SkillsPage() {
         ))}
       </div>
 
+      {/* Skill Card */}
       <div className="relative w-full max-w-xl mx-auto h-[320px] md:h-[400px]">
         <AnimatePresence mode="wait">
           <motion.div
-            key={skills[activeIndex]?.src}
+            key={skills[active].name}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -433,24 +481,25 @@ export default function SkillsPage() {
             className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 py-8 bg-white dark:bg-neutral-900 shadow-xl rounded-xl"
           >
             <img
-              src={skills[activeIndex].src}
-              alt={skills[activeIndex].name}
+              src={skills[active].src}
+              alt={skills[active].name}
               className="h-24 w-24 object-contain"
               draggable={false}
             />
             <p className="text-sm text-gray-500 dark:text-neutral-400 italic max-w-md">
-              “{skills[activeIndex].quote}”
+              “{skills[active].quote}”
             </p>
             <p className="text-xl font-semibold text-black dark:text-white">
-              {skills[activeIndex].name}
+              {skills[active].name}
             </p>
             <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              {skills[activeIndex].designation}
+              {skills[active].designation}
             </p>
           </motion.div>
         </AnimatePresence>
       </div>
 
+      {/* Navi Buttons */}
       <div className="flex justify-center items-center gap-6 pt-6">
         <button
           onClick={prev}
@@ -468,3 +517,4 @@ export default function SkillsPage() {
     </div>
   );
 }
+
