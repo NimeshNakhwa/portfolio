@@ -6,9 +6,9 @@ const Footer = () => {
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
         <a 
         className="hover:text-blue-500 "
-        href="tel:+917900110997"
+        href="/"
         >
-          Nimesh™</a>
+          Nimesh's Portfolio</a>
         </span>
         <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
           <li>
@@ -46,7 +46,7 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             >
-              Contact</a>
+              Email</a>
           </li>
         </ul>
       </div>

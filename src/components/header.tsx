@@ -1,32 +1,105 @@
+// "use client";
+
+// import React, { useState } from "react";
+// import { motion } from "framer-motion";
+// import Link from "next/link";
+
+// // Width animation config
+// const transition = {
+//   type: "spring",
+//   mass: 0.5,
+//   damping: 11.5,
+//   stiffness: 100,
+//   restDelta: 0.001,
+//   restSpeed: 0.001,
+// } as const;
+
+// const Header = () => {
+//   const [active, setActive] = useState<string | null>(null);
+
+//   return (
+//     <motion.nav
+//       initial={{ width: 500 }}
+//       animate={{
+//         width
+//             :active === "Home"
+//             ? 750
+//             :active === "Skills"
+//             ? 750
+//             : active === "About"
+//             ? 750
+//             : 600, // default width
+//       }}
+//       transition={transition}
+//       className="w-full max-w-6xl mx-auto px-8 py-4"
+//       onMouseLeave={() => setActive(null)} // revert when mouse leaves nav
+//     >
+//       <Menu>
+//         <MenuItem
+//           item="Home"
+//           href="/"
+//           onHover={() => setActive("Home")}
+//         />
+//         <MenuItem
+//           item="Skills"
+//           href="/skills"
+//           onHover={() => setActive("Skills")}
+//         />
+//         <MenuItem
+//           item="About"
+//           href="/about"
+//           onHover={() => setActive("About")}
+//         />
+//       </Menu>
+//     </motion.nav>
+//   );
+// };
+
+// // ⬇️ Menu Wrapper
+// const Menu = ({ children }: { children: React.ReactNode }) => {
+//   return (
+//     <div className="relative w-full flex justify-center space-x-8 px-16 py-6 rounded-full border bg-white shadow dark:bg-black dark:border-white/20">
+//       {children}
+//     </div>
+//   );
+// };
+
+// // ⬇️ Menu Item Button
+// const MenuItem = ({
+//   item,
+//   href,
+//   onHover,
+// }: {
+//   item: string;
+//   href?: string;
+//   onHover?: () => void;
+// }) => {
+//   return (
+//     <div onMouseEnter={onHover} className="relative">
+//       {href ? (
+//         <Link
+//           href={href}
+//           className="text-black dark:text-white font-medium text-sm hover:opacity-80 transition-opacity"
+//         >
+//           {item}
+//         </Link>
+//       ) : (
+//         <span className="text-black dark:text-white">{item}</span>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Header;
+
+
 "use client";
-import React from "react";
-import { motion } from "motion/react";
+
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
-const Header = () => {
-  // Example usage of Menu and MenuItem
-  const [active, setActive] = React.useState<string | null>(null);
-
-  return (
-    <header className="w-full flex justify-center">
-      <Menu setActive={setActive}>
-        <MenuItem 
-        setActive={setActive} 
-        active={active} 
-        item="Home"
-        href="/"
-        />
-        <MenuItem 
-        setActive={setActive} 
-        active={active} 
-        item="Skills"
-        href="skills"
-        />
-        <MenuItem setActive={setActive} active={active} item="Project" />
-      </Menu>
-    </header>
-  );
-};
+// Transition configuration
 const transition = {
   type: "spring",
   mass: 0.5,
@@ -36,122 +109,96 @@ const transition = {
   restSpeed: 0.001,
 } as const;
 
+const Header = () => {
+  const [active, setActive] = useState<string | null>(null);
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-export const MenuItem = ({
-  setActive,
-  active,
-  item,
-  children,
-  href,
-}: {
-  setActive: (item: string) => void;
-  active: string | null;
-  item: string;
-  children?: React.ReactNode;
-  href?: string;
-}) => {
-  const content = (
-    <motion.p
-      transition={{ duration: 0.3 }}
-      className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white"
-    >
-      {item}
-    </motion.p>
-  );
+  // Show the navbar on scroll up, hide on scroll down
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY < lastScrollY) {
+        setShowHeader(true);
+      } else if (currentY > lastScrollY) {
+        setShowHeader(false);
+      }
+      setLastScrollY(currentY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   return (
-    <div onMouseEnter={() => setActive(item)} className="relative ">
-      {href ? <Link href={href}>{content}</Link> : content}
-      {active !== null && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
+    <AnimatePresence>
+      {showHeader && (
+        <motion.nav
+        
+          key="navbar"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            width
+                : active === "Home"
+                ? 750
+                :active === "Skills"
+                ? 750
+                : active === "About"
+                ? 750
+                : 600,
+          }}
+          exit={{ opacity: 0, y: -50 }}
           transition={transition}
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 max-w-6xl px-8 py-4"
+          onMouseLeave={() => setActive(null)}
         >
-          {active === item && (
-            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4">
-              <motion.div
-                transition={transition}
-                layoutId="active"
-                className="bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
-              >
-                <motion.div
-                  layout // layout ensures smooth animation
-                  className="w-max h-full p-4"
-                >
-                  {children}
-                </motion.div>
-              </motion.div>
-            </div>
-          )}
-        </motion.div>
+          <Menu>
+            <MenuItem item="Home" href="/" onHover={() => setActive("Home")} />
+            <MenuItem item="Skills" href="/skills" onHover={() => setActive("Skills")} />
+            <MenuItem item="My WeatherApp" href="https://nimeshweatherapp.netlify.app" onHover={() => setActive("About")} />
+          </Menu>
+        </motion.nav>
       )}
+    </AnimatePresence>
+  );
+};
+
+// Navigation container
+const Menu = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="w-full flex justify-center space-x-8 rounded-full border px-16 py-6 bg-white shadow dark:bg-black dark:border-white/20">
+      {children}
     </div>
   );
 };
 
-export const Menu = ({
-  setActive,
-  children,
-}: {
-  setActive: (item: string | null) => void;
-  children: React.ReactNode;
-}) => {
-  return (
-    <nav
-      onMouseLeave={() => setActive(null)} // resets the state
-      className="relative rounded-full border border-transparent dark:bg-black dark:border-white/[0.2] bg-white shadow-input flex justify-center space-x-4 px-8 py-6 "
-    >
-      {children}
-    </nav>
-  );
-};
-
-export const ProductItem = ({
-  title,
-  description,
+// Navigation link
+const MenuItem = ({
+  item,
   href,
-  src,
+  onHover,
 }: {
-  title: string;
-  description: string;
-  href: string;
-  src: string;
+  item: string;
+  href?: string;
+  onHover?: () => void;
 }) => {
   return (
-    <a href={href} className="flex space-x-2">
-      <img
-        src={src}
-        width={140}
-        height={70}
-        alt={title}
-        className="shrink-0 rounded-md shadow-2xl"
-      />
-      <div>
-        <h4 className="text-xl font-bold mb-1 text-black dark:text-white">
-          {title}
-        </h4>
-        <p className="text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300">
-          {description}
-        </p>
-      </div>
-    </a>
+    <div onMouseEnter={onHover} className="relative">
+      <Link
+        href={href || "#"}
+        className="text-black dark:text-white font-medium text-sm hover:opacity-80 transition-opacity"
+      >
+        {item}
+      </Link>
+    </div>
   );
 };
-
-export const HoveredLink = ({ children, ...rest }: any) => {
-  return (
-    <a
-      {...rest}
-      className="text-neutral-700 dark:text-neutral-200 hover:text-black "
-    >
-      {children}
-    </a>
-  );
-};
-
-
 
 export default Header;
+
+
 
 
 

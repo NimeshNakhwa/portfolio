@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import {WavyBackground} from "@/components/wavy-background";
 
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,14 +29,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Background layer */}
-        <div className="fixed inset-0 -z-10">
+<body>
+        <div className="fixed inset-0 z-[-1] pointer-events-none">
           <WavyBackground />
         </div>
-        {/* Main content */}
+
         <Header />
-        {children}
+        {/* Main content container starts below the header */}
+        <main className="pt-36 px-6"> 
+          {children}
+        </main>
+
         <Footer />
       </body>
     </html>

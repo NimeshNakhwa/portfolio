@@ -4,7 +4,9 @@
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "motion/react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+
+import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
 
 // Example testimonials data
 const testimonials = [
@@ -123,7 +125,8 @@ const testimonials3 = [
 
 export default function SkillsPage() {
   return (
-    <div>
+
+    <div>          
       <h1 className='px-7 items-center font-bold text-3xl'>PROGRAMING LANGUAGES</h1>
       <AnimatedTestimonials testimonials={testimonials} autoplay />
       <h1 className='px-7 items-center font-bold text-3xl'>FRONTEND</h1>
@@ -172,6 +175,11 @@ export const AnimatedTestimonials = ({
   const randomRotateY = () => {
     return Math.floor(Math.random() * 21) - 10;
   };
+  const randomRotations = useMemo(
+  () => testimonials.map(() => randomRotateY()),
+  []
+);
+
   return (
     <div className="mx-auto max-w-sm px-4 py-20 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12">
       <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
@@ -185,13 +193,14 @@ export const AnimatedTestimonials = ({
                     opacity: 0,
                     scale: 0.9,
                     z: -100,
-                    rotate: randomRotateY(),
+                  rotate: randomRotations[index],
+
                   }}
                   animate={{
                     opacity: isActive(index) ? 1 : 0.7,
                     scale: isActive(index) ? 1 : 0.95,
                     z: isActive(index) ? 0 : -100,
-                    rotate: isActive(index) ? 0 : randomRotateY(),
+                    rotate: isActive(index) ? 0 : randomRotations[index],
                     zIndex: isActive(index)
                       ? 40
                       : testimonials.length + 2 - index,
@@ -201,7 +210,8 @@ export const AnimatedTestimonials = ({
                     opacity: 0,
                     scale: 0.9,
                     z: 100,
-                    rotate: randomRotateY(),
+                    rotate: randomRotations[index],
+
                   }}
                   transition={{
                     duration: 0.4,
