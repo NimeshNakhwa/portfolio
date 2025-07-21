@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import SplitText from './animations/splittext';
-import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
+// import Hyperspeed from "@/blocks/Backgrounds/Hyperspeed/Hyperspeed";
 
 const handleAnimationComplete = () => {
   console.log('All letters have animated!');

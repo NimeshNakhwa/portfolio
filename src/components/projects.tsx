@@ -110,6 +110,7 @@
 
 import React from "react";
 import { Timeline } from "@/components/animations/timeline";
+import Image from 'next/image';
 
 export function Project() {
   const data = [
