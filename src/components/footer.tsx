@@ -77,12 +77,12 @@ export default function Footer() {
     },
     {
       name: "LinkedIn",
-      href: "https://www.linkedin.com/in/nimeshnakhwa/",
+      href: "https://www.linkedin.com/in/nimesh-nakhwa/",
       icon: <FaLinkedin />,
     },
     {
       name: "Email",
-      href: "mailto:nimesh@example.com",
+      href: "mailto:nimeshnakhwa100@gmail.com",
       icon: <FaEnvelope />,
     },
     {
