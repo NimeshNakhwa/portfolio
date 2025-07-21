@@ -445,7 +445,7 @@ export default function SkillsPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden text-center px-4 py-16 md:px-12">
-      <h1 className="text-3xl font-bold mb-6 text-neutral-800 dark:text-white">
+      <h1 className="text-3xl font-bold mb-6 text-white">
         Skills
       </h1>
 

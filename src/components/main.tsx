@@ -22,7 +22,7 @@ const main = () => {
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen">
         <SplitText
           text="Hello,I'am Nimesh!"
-          className="text-6xl font-semibold text-center"
+          className="text-6xl font-semibold text-center text-white"
           delay={100}
           duration={0.6}
           ease="elastc.out(1,0.3)"
@@ -36,7 +36,7 @@ const main = () => {
         />
         <SplitText
           text="Welcome to my portfolio."
-          className="text-6xl font-semibold text-center mt-4"
+          className="text-6xl font-semibold text-center mt-4 text-white"
           delay={100}
           duration={0.6}
           ease="elastc.out(1,0.3)"

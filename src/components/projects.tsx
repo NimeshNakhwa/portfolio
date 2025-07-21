@@ -118,7 +118,7 @@ export function Project() {
       title: "First Project(A To-Do List)",
       content: (
         <div>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-lg dark:text-neutral-200">
+          <p className="mb-8 text-base font-normal text-white md:text-lg">
             Built a To-Do List on React Js + Vite.It includes a simple UI with add, delete, and edit functionalities.
           </p>
           <div className="grid grid-cols-2 gap-4">
@@ -158,10 +158,10 @@ export function Project() {
       title: "Weather App",
       content: (
         <div>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-lg dark:text-neutral-200">
+          <p className="mb-8 text-base font-normal text-white md:text-lg">
             Built a Weather App using React Js + Vite.It fetches data from the OpenWeatherMap API and displays the current weather conditions for a given city. 
           </p>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-lg dark:text-neutral-200">
+          <p className="mb-8 text-base font-normal text-white md:text-lg">
             It includes a simple UI with search functionality to get the weather of any city.
           </p>
           <div className="grid grid-cols-2 gap-4">
